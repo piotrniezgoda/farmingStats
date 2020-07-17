@@ -1,0 +1,44 @@
+@import '../../variables.module.scss';
+
+.statsBar {
+  background: $dark;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  box-shadow: inset 0px 0px 20px #0E0E0E;
+  @media (max-width: 536px) {
+    flex-direction: column;
+  }
+}
+
+.statsBarBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  &:not(:last-child) {
+    margin-right: 8rem;
+
+    @media (max-width: 740px) {
+      margin-right: 3rem;
+    }
+    @media (max-width: 600px) {
+      margin-right: 1.75rem;
+    }
+    @media (max-width: 536px) {
+      margin-right: 0;
+      margin-bottom: 2rem;
+    }
+  }
+}
+.statsBarName {
+  font-size: 1.5rem;
+  color: $grey;
+  margin: 0.5rem 0 0.5rem;
+}
+.statsBarValue {
+  color: $grey;
+  font-weight: 700;
+}

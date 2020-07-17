@@ -1,0 +1,86 @@
+@import './reset.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+@import './variables.module.scss';
+
+.app {
+  height: 100vh;
+  padding: 2rem;
+  background: #1E1E1E;
+  font-family: 'Montserrat', sans-serif;
+}
+.header {
+  margin-top: 4.87rem;
+}
+.title {
+  text-align: center;
+  font-size: 3rem;
+  color: #fff;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-shadow: 4px 4px 0px #953600;
+
+  @media screen and (max-width: 678px) {
+    font-size: 2rem;
+  }
+}
+
+.menuLink {
+  display: block;
+  text-align: center;
+  line-height: 2.5rem;
+  width: 9.187rem;
+  height: 9.187rem;
+  border-radius: 50%;
+  background: $dark;
+  box-shadow: -4px -4px 4px rgba(255, 255, 255, 0.18), 4px 4px 4px rgba(0, 0, 0, 0.24);
+  color: $grey;
+  text-decoration: none;
+  font-size: 1.125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: all 0.3s;
+  transform: rotate(0deg);
+  position: relative;
+  outline: none;
+  z-index: 10;
+  overflow: hidden;
+
+  &:hover, &:focus {
+    transform: rotate(15deg);
+    transition: transform 0.3s;
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.24), inset -4px -4px 4px rgba(242, 169, 80, 1);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 170%;
+    height: 170%;
+    background: $dark;
+    z-index: -1;
+    transform: translateY(0%);
+    transition: .3s;
+  }
+
+  &:focus::before, &:hover::before {
+    transform: translateY(-100%);
+    transition: .3s;
+  }
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+}

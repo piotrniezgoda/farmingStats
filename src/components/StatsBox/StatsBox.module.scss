@@ -1,0 +1,56 @@
+@import '../../variables.module.scss';
+
+.box {
+  background: #1E1E1E;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4), -4px -4px 6px rgba(255, 255, 255, 0.1);
+  border-radius: 29px;
+  padding: 2rem;
+}
+
+.boxTitle {
+  font-weight: 700;
+  font-size: 1.5rem;
+
+  color: $yellow;
+}
+
+.list {
+  margin-top: 2rem;
+
+}
+
+.listElement:not(:last-child) {
+  margin-bottom: 0.8rem;
+}
+
+.listParagraph {
+  font-weight: 700;
+  color: $grey;
+}
+
+.dataValue {
+  font-weight: 400;
+}
+
+.listElementDots {
+  margin-bottom: 0.8rem;
+  margin-top: 2rem;
+  position: relative;
+  padding: 0 0 0 20px;
+  &::before {
+    content: "";
+			position: absolute;
+			left: 0;
+			top: 2px;
+			width: 10px;
+			height: 10px;
+			background-color: $yellow;
+			border-radius: 50%;
+			-moz-border-radius: 50%;
+			-webkit-border-radius: 50%;
+  }
+}
+
+.NoPlayerInfo {
+  opacity: 0.35;
+}
