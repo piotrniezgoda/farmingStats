@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import Helmet from 'react-helmet';
 import styles from './Stats.module.scss';
 
 import arrowBack from '../../assets/icons/arrowBack.svg';
@@ -110,6 +111,10 @@ class Stats extends React.Component {
 render() {
   return (
     <div className={styles.statsApp}>
+        <Helmet>
+          <title>Farming Simulator 19 server stats</title>
+          <meta name="description" content="Szybki podgląd podstawowych statystyk serwera Alkofarmerzy z Polski B."/>
+        </Helmet>
         <div className={[styles.loader, (!this.state.isComponentLoaded ? styles.loaderShow : '')].join(' ')}>
         <div className={styles.ldsRing}><div></div><div></div><div></div><div></div></div>
         </div>
