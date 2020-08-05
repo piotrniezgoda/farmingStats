@@ -35,7 +35,7 @@ class Stats extends React.Component {
 
   componentDidMount() {
     this.makeRequest();
-    this.setState({isComponentLoaded: true});
+    this.setState({isComponentLoaded: false});
 
   }
 
@@ -87,12 +87,10 @@ class Stats extends React.Component {
       this.setState({
          serverStats: serverStats,
          quickStats: quickStats,
+         isComponentLoaded: true
        })
 
     })
-    .then(this.setState({
-      isComponentLoaded: true
-    }))
     .catch((error) => {
       console.log('Error fetching the feed: ', error);
     });
