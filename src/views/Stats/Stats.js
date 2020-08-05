@@ -13,8 +13,6 @@ class Stats extends React.Component {
 
   constructor(props) {
     super(props);
-    this.serverStatsURL = "http://195.4.17.55:8080/feed/dedicated-server-stats.xml?code=15dd77dda9756f35ad891aa743ea87ca";
-    this.saveStatsURL = "http://195.4.17.55:8080/feed/dedicated-server-savegame.html?code=15dd77dda9756f35ad891aa743ea87ca&file=careerSavegame";
 
     this.state = {
       isComponentLoaded: false,
