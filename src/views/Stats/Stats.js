@@ -35,78 +35,73 @@ class Stats extends React.Component {
     };
   }
 
-  refreshStats = () => {
-    this.makeRequest();
-  }
-
-  makeRequest = () => {
-    this.setState({
-      isComponentLoaded: false
-    })
-  fetch(this.serverStatsURL)
-    .then((response) => response.text())
-    .then(responseText => (new window.DOMParser()).parseFromString(responseText, "text/xml"))
-    .then(data => {
-      const xmlData = data.getElementsByTagName('Server');
-
-      const playersData = data.getElementsByTagName('Slots')
-      let playersArray = [];
-
-      for(let i = 0; i < playersData[0].children.length; i++) {
-        if(playersData[0].children[i].textContent !== "") {
-          playersArray.push(playersData[0].children[i].textContent);
-        }
-      }
-
-      this.setState({
-        players: playersArray,
-      });
-
-      let serverStats = this.state.serverStats
-      let quickStats = this.state.quickStats;
-
-      serverStats.game = xmlData[0].attributes[0].nodeValue;
-      serverStats.mapName = xmlData[0].attributes[4].nodeValue;
-      serverStats.serverName = xmlData[0].attributes[3].nodeValue;
-      serverStats.serverLocation = xmlData[0].attributes[2].nodeValue;
-      serverStats.version = xmlData[0].attributes[1].nodeValue;
-
-      quickStats.online = xmlData[0].childNodes[1].attributes[1].nodeValue;
-      quickStats.slots = xmlData[0].childNodes[1].attributes[0].nodeValue;
-      this.setState({
-        serverStats: serverStats,
-        quickStats: quickStats,
-      })
-
-
-    })
-    .then(() => {
-      this.setState({
-        isComponentLoaded: true
-      })
-    })
-    .catch((error) => {
-      console.log('Error fetching the feed: ', error);
-    });
-
-    fetch(this.saveStatsURL)
-    .then((response) => response.text())
-    .then(responseText => (new window.DOMParser()).parseFromString(responseText, "text/xml"))
-    .then(data => {
-      const moneyData = data.getElementsByTagName('statistics');
-      let quickStats = this.state.quickStats;
-      quickStats.money = moneyData[0].children[0].childNodes[0].nodeValue;
-      this.setState({
-        quickStats: quickStats,
-      })
-    })
-  }
-
   componentDidMount() {
     this.makeRequest();
     this.setState({isComponentLoaded: true});
 
   }
+
+  refreshStats = () => {
+    this.makeRequest();
+  }
+
+
+
+  makeRequest = () => {
+    this.setState({
+      isComponentLoaded: false
+    })
+
+
+    fetch('https://farm-stats-backend.herokuapp.com/')
+    .then((response) => response.json())
+    .then(data  => {
+
+      const slots = data.serverStats.Server.Slots[0].Player
+      let playersArray = []
+      const slotsFilteredArray = slots.filter(e => e !== '');
+
+      let serverStats = this.state.serverStats
+      let quickStats = this.state.quickStats;
+
+       for(let i = 0; i < slotsFilteredArray.length; i++) {
+        if(slotsFilteredArray[i].$.isUsed) {
+          playersArray.push(slotsFilteredArray[i]._)
+        }
+       }
+
+       playersArray = playersArray.filter(el => el !== undefined)
+
+       this.setState({
+        players: playersArray,
+      });
+
+       serverStats.game = data.serverStats.Server.$.game;
+       serverStats.mapName = data.serverStats.Server.$.mapName;
+       serverStats.serverName = data.serverStats.Server.$.name;
+       serverStats.serverLocation = data.serverStats.Server.$.server;
+       serverStats.version = data.serverStats.Server.$.version;
+
+       quickStats.money = data.saveStats.careerSavegame.statistics[0].money[0];
+       quickStats.online = data.serverStats.Server.Slots[0].$.numUsed;
+       quickStats.slots = data.serverStats.Server.Slots[0].$.capacity;
+
+      this.setState({
+         serverStats: serverStats,
+         quickStats: quickStats,
+       })
+
+    })
+    .then(this.setState({
+      isComponentLoaded: true
+    }))
+    .catch((error) => {
+      console.log('Error fetching the feed: ', error);
+    });
+
+  }
+
+
 
 render() {
   return (
